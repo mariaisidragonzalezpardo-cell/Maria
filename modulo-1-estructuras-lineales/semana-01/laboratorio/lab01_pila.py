@@ -1,7 +1,7 @@
 """
 Lab 1 — Implementación de la clase Pila (Stack)
 INF 222 Estructura de Datos · Semestre 2026-2
-Estudiante: _________________________
+Estudiante:  Maria Gonsalez 
 Grupo: ______________________________
 Fecha: ______________________________
 """
