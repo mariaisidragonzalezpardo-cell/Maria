@@ -121,16 +121,19 @@ if __name__ == "__main__":
     except IndexError as e:
         print(f"Caso 5 - Excepción capturada correctamente en pop(): {e}")
     print("-" * 50)
-    # Caso 6 en adelante: agrega tus propios casos de prueba
+     # Caso 6: Intentar ver el tope (peek) en una pila vacía
     try:
         pila_vacia.peek()
     except IndexError as e:
-        print(f"Caso 6 - Excepción capturada correctamente en peek(): {e}")
+        print(f"Caso 6 - Excepción esperada en peek(): {e}")
     print("-" * 50)
-    # Caso 7: Vaciar completamente la pila
-    print("Caso 7 - Vaciando la pila...")
-    pila.pop()  # elimina 20
-    pila.pop()  # elimina 10
-    print(f"Caso 7 - Tamaño final: {pila.size()} (Esperado: 0)")
-    print(f"Caso 7 - ¿Está vacía?: {pila.is_empty()} (Esperado: True)")
-    print("=" * 50)
+
+    # Caso 7: Verificar comportamientos con diferentes tipos de datos
+    pila_mixta = Pila()
+    pila_mixta.push("Hola")
+    pila_mixta.push(3.14)
+    pila_mixta.push(True)
+    print(f"Caso 7 - Pila con tipos de datos mixtos: {pila_mixta}")
+    print(f"Caso 7 - Elemento en el tope (booleano): {pila_mixta.peek()}")
+    print("-" * 50)
+    

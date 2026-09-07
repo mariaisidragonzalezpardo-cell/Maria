@@ -1,9 +1,9 @@
 """
 Lab 2 — Pila Enlazada, Cola y Simulador de Impresión
 INF 222 Estructura de Datos · Semestre 2026-2
-Estudiante: _________________________
-Grupo: ______________________________
-Fecha: ______________________________
+Estudiante: Maria Gonzalez
+Grupo: Lab B
+Fecha: 7/9/2026
 """
 
 
