@@ -224,6 +224,7 @@ def simulador_impresion(trabajos):
         i += 1
 
     print(f"\nProceso finalizado. Total de páginas impresas: {total_paginas}")
+
 # =============================================================================
 # TAREA / TRABAJO AUTÓNOMO: EVALUACIÓN EN NOTACIÓN POSTFIJA (RPN)
 # =============================================================================

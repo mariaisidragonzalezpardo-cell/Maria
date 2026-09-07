@@ -1,9 +1,9 @@
 """
 Lab 3 — Simulador de Historial de Navegador (Taller Integrador)
 INF 222 Estructura de Datos · Semestre 2026-2
-Estudiante: _________________________
-Grupo: ______________________________
-Fecha: ______________________________
+Estudiante: María González
+Grupo: Lab B
+Fecha: 10/9/2026
 
 Descripción:
     Simula el comportamiento del historial de un navegador web usando DOS pilas:
@@ -67,7 +67,14 @@ class HistorialNavegador:
         - La pila de adelante se vacía (ya no hay futuro después de un desvío).
         """
         # TODO: implementa este método
-        pass
+        # Se guarda la página actual en la pila de atrás
+        self._pila_atras.push(self._actual)
+        
+        # Se actualiza la URL actual
+        self._actual = url
+        
+        # Se vacía la pila de adelante reinstanciando la pila
+        self._pila_adelante = Pila()
 
     def atras(self):
         """
@@ -77,7 +84,16 @@ class HistorialNavegador:
         Retorna la URL a la que se navegó, o None si no hay página anterior.
         """
         # TODO: implementa este método
-        pass
+        if self._pila_atras.is_empty():
+            return None
+        
+        # La página actual pasa a la pila de adelante
+        self._pila_adelante.push(self._actual)
+        
+        # La nueva página actual es la que estaba en el tope de la pila de atrás
+        self._actual = self._pila_atras.pop()
+        
+        return self._actual
 
     def adelante(self):
         """
@@ -87,8 +103,17 @@ class HistorialNavegador:
         Retorna la URL a la que se navegó, o None si no hay página siguiente.
         """
         # TODO: implementa este método
-        pass
-
+        if self._pila_adelante.is_empty():
+            return None
+        
+        # La página actual pasa a la pila de atrás
+        self._pila_atras.push(self._actual)
+        
+        # La nueva página actual es la que estaba en el tope de la pila de adelante
+        self._actual = self._pila_adelante.pop()
+        
+        return self._actual
+    
     def pagina_actual(self):
         """Retorna la URL de la página actualmente visible."""
         return self._actual
