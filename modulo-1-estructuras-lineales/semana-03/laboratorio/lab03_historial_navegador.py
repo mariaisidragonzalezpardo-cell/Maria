@@ -2,7 +2,7 @@
 Lab 3 — Simulador de Historial de Navegador (Taller Integrador)
 INF 222 Estructura de Datos · Semestre 2026-2
 Estudiante: María González
-Grupo: Lab B
+Grupo: Lab A
 Fecha: 10/9/2026
 
 Descripción:
