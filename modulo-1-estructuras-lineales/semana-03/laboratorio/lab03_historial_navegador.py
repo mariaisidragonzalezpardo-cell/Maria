@@ -2,7 +2,7 @@
 Lab 3 — Simulador de Historial de Navegador (Taller Integrador)
 INF 222 Estructura de Datos · Semestre 2026-2
 Estudiante: María González
-Grupo: Lab A
+Grupo: Lab B
 Fecha: 10/9/2026
 
 Descripción:
@@ -14,7 +14,7 @@ Descripción:
 
 
 # Puedes copiar aquí la clase Pila de lab01, o importarla:
-# from modulo_1_estructuras_lineales.semana_01.laboratorio.lab01_pila import Pila
+# from modulo_1_estructuras_lineales.semana_01.laboratorio.lab01_pila import Pil
 
 
 class Pila:
