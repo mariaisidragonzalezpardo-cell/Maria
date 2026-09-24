@@ -1,9 +1,10 @@
 """
 Lab 5 — Lista Enlazada Simple
 INF 222 Estructura de Datos · Semestre 2026-2
-Estudiante: _________________________
-Grupo: ______________________________
-Fecha: ______________________________
+Estudiante: María González
+Grupo: Lab, B
+Fecha: 23/9/2026
+
 """
 
 
@@ -32,13 +33,25 @@ class ListaEnlazada:
 
     def insertar_inicio(self, dato):
         """Inserta dato al inicio de la lista. O(1)."""
-        # TODO
-        pass
+        nuevo_nodo = Nodo(dato)
+        nuevo_nodo.siguiente = self._cabeza
+        self._cabeza = nuevo_nodo
+        self._tamanio += 1
 
     def insertar_final(self, dato):
         """Inserta dato al final de la lista. O(n)."""
-        # TODO: recorre hasta el último nodo, luego enlaza el nuevo
-        pass
+        nuevo_nodo = Nodo(dato)
+
+        if self.es_vacia():
+             self._cabeza = nuevo_nodo
+        else:
+            actual = self._cabeza
+            while actual.siguiente is not None:
+                actual = actual.siguiente
+            # ESTA LINEA VA AQUI (AFUERA DEL WHILE)
+            actual.siguiente = nuevo_nodo
+        
+        self._tamanio += 1
 
     def insertar_en_posicion(self, posicion, dato):
         """
@@ -47,9 +60,20 @@ class ListaEnlazada:
         Si posición >= tamaño, inserta al final.
         O(n).
         """
-        # TODO
-        pass
+        if posicion <= 0 or self.es_vacia():
+            self.insertar_inicio(dato)
+            return
+        if posicion >= self._tamanio:
+            self.insertar_final(dato)
+            return
+        nuevo_nodo = Nodo(dato)
+        actual = self._cabeza
+        for _ in range(posicion - 1):
+            actual = actual.siguiente
 
+        nuevo_nodo.siguiente = actual.siguiente
+        actual.siguiente = nuevo_nodo
+        self._tamanio += 1
     # ------------------------------------------------------------------
     # ELIMINACIÓN
     # ------------------------------------------------------------------
@@ -62,8 +86,20 @@ class ListaEnlazada:
                      eliminar el único nodo, dato no existe.
         O(n).
         """
-        # TODO
-        pass
+        if self._cabeza == dato:
+            self._cabeza = self._cabeza.siguiente
+            self._tamanio -= 1
+            return True
+        #El nodo previo al que contiene el dato
+        actual = self._cabeza
+        while actual.siguiente is not None and actual.siguiente.dato != dato: 
+            actual = actual.siguiente
+        # Si encontramos el dato en el siguiente nodo
+        if actual.siguiente is not None:
+            actual.siguiente = actual.siguiente.siguiente
+            self._tamanio -= 1
+            return True
+        return False
 
     def eliminar_en_posicion(self, posicion):
         """
@@ -71,8 +107,17 @@ class ListaEnlazada:
         Lanza IndexError si la posición está fuera de rango.
         O(n).
         """
-        # TODO
-        pass
+        if posicion < 0 or posicion >= self._tamanio:
+            raise IndexError("Indice fuera de rango")
+
+        if posicion == 0:
+            self._cabeza = self._cabeza.siguiente
+        else:
+            actual = self._cabeza
+            for _ in range(posicion - 1):
+                 actual = actual.siguiente
+            actual.siguiente = actual.siguiente.siguiente
+        self._tamanio -= 1
 
     # ------------------------------------------------------------------
     # BÚSQUEDA Y ACCESO
@@ -83,8 +128,12 @@ class ListaEnlazada:
         Retorna True si dato está en la lista, False si no.
         O(n).
         """
-        # TODO
-        pass
+        actual  = self._cabeza
+        while actual is not None:
+            if actual.dato == dato:
+                return True
+            actual = actual.siguiente
+        return False
 
     def obtener(self, indice):
         """
@@ -92,9 +141,13 @@ class ListaEnlazada:
         Lanza IndexError si el índice está fuera de rango.
         O(n).
         """
-        # TODO (tarea / trabajo autónomo)
-        pass
-
+        if indice < 0 or indice >= self._tamanio:
+            raise IndexError("Indice fuera de rango")
+        actual = self._cabeza
+        for _ in range(indice):
+            actual = actual.siguiente
+        return actual.dato
+    
     # ------------------------------------------------------------------
     # OTROS
     # ------------------------------------------------------------------
@@ -105,9 +158,15 @@ class ListaEnlazada:
         O(n).
         Ejemplo: [1→2→3] queda como [3→2→1]
         """
-        # TODO (tarea / trabajo autónomo)
-        # Pista: necesitas tres punteros: anterior, actual, siguiente
-        pass
+    anterior = None
+    actual = self._cabeza
+    while actual is not None:
+        siguiente = actual.siguiente
+        actual.siguiente = anterior
+        anterior = actual
+        actual = siguiente
+
+    self._cabeza = anterior 
 
     def tamanio(self):
         """Retorna el número de elementos. O(1)."""
@@ -219,3 +278,6 @@ if __name__ == "__main__":
 
     print("\n--- Comparación de tiempos ---")
     comparar_tiempos_insercion_inicio(n=50_000)
+
+# Uso de IA: Se consultó una IA para la depuración de errores en la terminal
+# y la verificación del flujo de punteros en los métodos de inserción e inversión.
