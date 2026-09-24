@@ -1,17 +1,15 @@
 """
 Lab 6 — Listas Circulares y Problema de Josephus
 INF 222 Estructura de Datos · Semestre 2026-2
-Estudiante: _________________________
-Grupo: ______________________________
-Fecha: ______________________________
+Estudiante: Maria Gonzalez
+Grupo: Lab, B
+Fecha: 24/09/2026
 """
-
 
 class Nodo:
     def __init__(self, dato):
         self.dato = dato
         self.siguiente = None
-
 
 # =============================================================================
 # PARTE 1: LISTA ENLAZADA CIRCULAR
@@ -80,7 +78,6 @@ class ListaCircular:
             return "Lista circular vacía"
         return " → ".join(str(d) for d in datos) + " → (inicio)"
 
-
 # =============================================================================
 # PARTE 2: LISTA CIRCULAR CON NODO CABEZA (SENTINELA)
 # Hay un nodo fijo (centinela) que no contiene dato útil.
@@ -108,13 +105,32 @@ class ListaCircularConCabeza:
 
     def insertar_final(self, dato):
         """Inserta dato justo antes del centinela (al final). O(n) sin puntero al final."""
-        # TODO: recorre hasta el nodo cuyo siguiente es el centinela, luego inserta
-        pass
+        nuevo = Nodo(dato)
+        actual = self._centinela
+
+        while actual.siguiente is not self._centinela:
+            actual = actual.siguiente
+
+        nuevo.siguiente = self._centinela
+        actual.siguiente = nuevo
+        self._tamanio += 1
 
     def eliminar(self, dato):
         """Elimina la primera ocurrencia de dato. Retorna True si se encontró."""
-        # TODO: recorre buscando el dato; al encontrarlo, desencadena el nodo
-        pass
+        actual = self._centinela
+        # BUSCAR EL NODO PREVIO AL QUE CONTIENE EL DATO
+        while (
+            actual.siguiente is not self._centinela
+            and actual.siguiente.dato != dato
+        ):
+            actual = actual.siguiente
+        # SI LO ENCONTRAMOS ANTES DE DAR LA VUELTA COMPLETA AL CENTINELA
+        if actual.siguiente is not self._centinela:
+            actual.siguiente = actual.siguiente.siguiente
+            self._tamanio -= 1
+            return True
+        
+        return False
 
     def recorrer(self):
         """Retorna lista con todos los datos desde el inicio hasta antes del centinela."""
@@ -134,7 +150,6 @@ class ListaCircularConCabeza:
             return "[C] → [C] (vacía)"
         return "[C] → " + " → ".join(str(d) for d in datos) + " → [C]"
 
-
 # =============================================================================
 # PARTE 3: PROBLEMA DE JOSEPHUS
 # n personas en círculo, contar hasta k, eliminar, repetir.
@@ -152,12 +167,21 @@ def josephus(n, k):
         lista.insertar_final(i)
 
     # TODO: mientras quede más de una persona:
-    #   - cuenta k posiciones avanzando la "cola" (el nodo antes del que se elimina)
-    #   - elimina el nodo que corresponde
-    # Cuando quede una persona, retorna su dato
+    if n <= 0:
+        return None
+    lista = ListaCircular()
+    for i in range(1, n + 1):
+        lista.insertar_final(i)
+    # MIENTRAS QUEDA MAS DE UNA PERSONA
+    while lista.tamanio() > 1:
+        # LA COLA (K - 1) PARA UBICAR EL NODO ANTERIOR AL QUE SERA ELIMINADO
+        for _ in range(k - 1):
+            lista._cola = lista._cola.siguiente
+    # EL NODO A ELIMINAR ES EL 1 DE A COLA ACTUAL
+    lista.eliminar_inicio()
+# RETORNAMOS AL DATO DEL INICIO SOBREVIVIENTE QUE QUEDA
 
-    pass
-
+    return lista.eliminar_inicio()
 
 # =============================================================================
 # CASOS DE PRUEBA
