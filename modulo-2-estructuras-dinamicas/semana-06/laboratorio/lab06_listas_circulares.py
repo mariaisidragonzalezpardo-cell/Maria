@@ -220,3 +220,9 @@ if __name__ == "__main__":
     print(f"josephus(7, 3) = {josephus(7, 3)}  (esperado: 4)")
     print(f"josephus(5, 2) = {josephus(5, 2)}  (esperado: 3)")
     print(f"josephus(1, 5) = {josephus(1, 5)}  (esperado: 1)")
+# =============================================================================
+# DECLARACIÓN DE USO DE IA
+# Se utilizó Asistencia de IA como herramienta pedagógica y de depuración para:
+# 1. Diseñar el algoritmo de Josephus sobre la estructura de Lista Circular.
+# 2. Verificar la lógica de ciclo y manejo de centinela en la ListaCircularConCabeza.
+# =============================================================================
