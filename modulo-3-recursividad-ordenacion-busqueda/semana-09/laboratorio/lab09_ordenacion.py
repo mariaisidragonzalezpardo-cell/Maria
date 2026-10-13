@@ -1,9 +1,9 @@
 """
 Lab 9 — Algoritmos de Ordenación y Comparación de Eficiencia
 INF 222 Estructura de Datos · Semestre 2026-2
-Estudiante: _________________________
-Grupo: ______________________________
-Fecha: ______________________________
+Estudiante: María González
+Grupo: Lab, B
+Fecha: 10/12/22026
 """
 
 import time
@@ -15,6 +15,13 @@ import random
 # Implementa cada función. IMPORTANTE: trabaja sobre una COPIA del arreglo
 # (usa lista[:] o list(lista)) para no alterar el original en las comparaciones.
 # =============================================================================
+# =============================================================================
+# DECLARACIÓN DE USO DE IA
+# =============================================================================
+# Utilicé herramientas de IA como guía conceptual y de apoyo para comprender
+# la lógica del flag de optimización en Bubble Sort, la estructura del bucle
+# en Insertion Sort y la interpretación de los tiempos de ejecución.
+# =============================================================================
 
 def burbuja(arr):
     """
@@ -25,7 +32,15 @@ def burbuja(arr):
     """
     lista = list(arr)  # trabaja sobre copia
     n = len(lista)
-    # TODO: implementa burbuja con el flag de optimización
+    for i in range(n):
+        intercambio = False
+        for j in range(0, n - i - 1):
+            if lista[j] > lista[j + 1]:
+                lista[j], lista[j + 1] = lista[j + 1], lista[j]
+                intercambio = True
+        # Si no hubo intercambios, el arreglo ya esta ordenado
+        if not intercambio:
+            break        
     return lista
 
 
@@ -38,7 +53,14 @@ def seleccion(arr):
     """
     lista = list(arr)
     n = len(lista)
-    # TODO: implementa seleccion
+    for i in range(n):
+        min_idx = i
+        for j in range(i + 1, n):
+            if lista[j] < lista[min_idx]:
+                min_idx = j
+        # Intercambia el elemento minimo encontrado con el primero
+        if min_idx != i:
+            lista[i], lista[min_idx] = lista[min_idx], lista[i]
     return lista
 
 
@@ -50,7 +72,14 @@ def insercion(arr):
     Complejidad: O(n) mejor caso (casi ordenado), O(n²) promedio y peor caso.
     """
     lista = list(arr)
-    # TODO: implementa insercion
+    for i in range(1, len(lista)):
+        actual = lista[i]
+        j = i - 1
+        # Desplaza los elementos mayores hacia la derecha
+        while j >= 0 and lista[j] > actual:
+            lista[j + 1] = lista[j]
+            j -= 1
+        lista[j + 1] = actual
     return lista
 
 
@@ -64,9 +93,27 @@ def merge_sort(arr):
     Retorna una nueva lista ordenada.
     Complejidad: O(n log n) en todos los casos. No es in situ (requiere memoria extra).
     """
-    # TODO (opcional / ampliación)
-    pass
+    if len(arr) <= 1:
+        return list(arr)
 
+    medio = len(arr) // 2
+    izquierda = merge_sort(arr[:medio])
+    derecha = merge_sort(arr[medio:])
+
+    return _mezclar(izquierda, derecha)
+def _mezclar(izq, der):
+    resultado = []
+    i = j = 0
+    while i < len(izq) and j < len(der):
+        if izq[i] < der[j]:
+            resultado.append(izq[i])
+            i += 1
+        else:
+            resultado.append(der[j])
+            j += 1
+        resultado.extend(izq[i:])
+        resultado.extend(der[j:])
+        return resultado
 
 # =============================================================================
 # GENERADORES DE ARREGLOS DE PRUEBA

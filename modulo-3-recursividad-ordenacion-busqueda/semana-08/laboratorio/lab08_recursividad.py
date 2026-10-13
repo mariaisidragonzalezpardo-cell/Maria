@@ -3,7 +3,7 @@ Lab 8 — Recursividad (con uso declarado de IA)
 INF 222 Estructura de Datos · Semestre 2026-2
 Estudiante: María González
 Grupo: Lab, B
-Fecha: 10/7/2026
+Fecha: 10/7/2026s
 
 =============================================================
 DECLARACIÓN DE USO DE IA 
