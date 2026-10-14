@@ -3,7 +3,7 @@ Lab 9 — Algoritmos de Ordenación y Comparación de Eficiencia
 INF 222 Estructura de Datos · Semestre 2026-2
 Estudiante: María González
 Grupo: Lab, B
-Fecha: 12/10/22026
+Fecha: 13/10/22026
 """
 
 import time
