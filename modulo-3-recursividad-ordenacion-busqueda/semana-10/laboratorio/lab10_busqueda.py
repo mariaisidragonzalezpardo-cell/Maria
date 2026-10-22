@@ -1,9 +1,9 @@
 """
 Lab 10 — Búsqueda Secuencial y Binaria
 INF 222 Estructura de Datos · Semestre 2026-2
-Estudiante: _________________________
-Grupo: ______________________________
-Fecha: ______________________________
+Estudiante: María González
+Grupo: Lab, B
+Fecha: 
 """
 
 import time
@@ -21,8 +21,12 @@ def busqueda_secuencial(arr, objetivo):
     No requiere que el arreglo esté ordenado.
     Complejidad: O(n).
     """
-    # TODO
-    pass
+    # Recorre los elementos uno por uno
+    for i in range(len(arr)):
+        if arr[i] == objetivo:
+            return  i
+    # Si no encuentra el objectivo
+    return -1
 
 
 # =============================================================================
@@ -38,11 +42,17 @@ def busqueda_binaria_iterativa(arr, objetivo):
     """
     izquierda = 0
     derecha = len(arr) - 1
-    # TODO: implementa el bucle while con izquierda <= derecha
-    # mid = (izquierda + derecha) // 2
-    # Si arr[mid] == objetivo: retorna mid
-    # Si arr[mid] < objetivo: busca en la mitad derecha
-    # Si arr[mid] > objetivo: busca en la mitad izquierda
+    while izquierda <= derecha:
+        mid = (izquierda + derecha) // 2
+
+        if arr[mid] == objetivo:
+            return mid
+        elif arr[mid] < objetivo:
+            izquierda = mid +1
+        else:
+            derecha = mid -1
+
+
     return -1
 
 
@@ -68,8 +78,15 @@ def busqueda_binaria_recursiva(arr, objetivo, izquierda=None, derecha=None):
 
     mid = (izquierda + derecha) // 2
 
-    # TODO: implementa los 3 casos (encontrado, buscar izquierda, buscar derecha)
-    pass
+    # Caso 1: se encontro el objectivo
+    if arr[mid] == objetivo:
+        return mid
+    # Caso 2: buscar en la mitad de la derecha
+    elif arr[mid] < objetivo:
+        return busqueda_binaria_recursiva(arr, objetivo, mid + 1, derecha)
+    # Caso 3: buscar en la mitad de la izquierda
+    else:
+        return busqueda_binaria_recursiva(arr, objetivo, izquierda, mid - 1)
 
 
 # =============================================================================
