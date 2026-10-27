@@ -1,8 +1,8 @@
 """
 Lab 11 — Taller Integrador: Ordenación + Búsqueda + Recursión
 INF 222 Estructura de Datos · Semestre 2026-2
-Estudiante: _________________________
-Grupo: ______________________________
+Estudiante: Maria Gonzalez 
+Grupo: Lab, B 
 Fecha: ______________________________
 
 Este taller integra los tres grandes temas del Módulo 3. Deberás:
@@ -14,6 +14,12 @@ Este taller integra los tres grandes temas del Módulo 3. Deberás:
 
 import time
 import random
+# =============================================================================
+# USO DE IA
+# =============================================================================
+# Uso exclusivamente como fuente de consulta 
+# para la información del contenido de los algoritmos de ordenación, búsqueda y recursión.
+# =============================================================================
 
 
 # =============================================================================
@@ -42,9 +48,8 @@ def ordenar_contactos(contactos):
     Justifica aquí: [ANÁLISIS] ¿Por qué elegiste ese algoritmo?
     Complejidad esperada: ...
     """
-    # TODO
-    pass
-
+    # Usamos sorted con una funcion lambda basada en tuplas (apellido, luego nombre)
+    return sorted(contactos, key=lambda c: (c['apellido'], c['nombre']))
 
 def buscar_por_apellido(contactos_ordenados, apellido_buscado):
     """
@@ -57,9 +62,38 @@ def buscar_por_apellido(contactos_ordenados, apellido_buscado):
       2. Luego expande hacia la izquierda y la derecha para capturar todas.
     Complejidad esperada: O(log n + k) donde k = número de coincidencias.
     """
-    # TODO
-    pass
+    
+    izquierda = 0
+    derecha = len(contactos_ordenados) - 1
+    indice_encontrado = -1
+    # Busqueda binaria para encontar culquier coincidencia
+    while isquierda <= derecha:
+        mid = (izquierda + derecha) // 2
+        apellido_actual = contactos_ordenados[mid]['apellido']
 
+        if apellido_actual == apellido_buscado:
+            indice_encontrado = mid
+            break
+        elif apellido_actual < apellido_buscado:
+            izquierda = mid + 1
+        else:
+            derecha = mid - 1
+    
+    if indice_encontrado == -1:
+        return []
+    # Expandir hacia la izquierda y derecha
+    resultados = [contactos_ordenados[indice_encontrado]]
+    # Expandir hacia la izquierda
+    i = indice_encontrado - 1    
+    while i >= 0 and contactos_ordenados[i]['apellido'] == apellido_buscado:
+       resultado.insert(0, contactos_ordenados[i])
+       i -= 1
+    # Expandir hacia la derecha
+    j = indice_encontrado + 1
+    while j < len(contactos_ordenados) and contactos_ordenados[j]['apellido'] == apellido_buscado
+        resultados.append(contactos_ordenados[j])
+        j += 1
+    return resultados
 
 # =============================================================================
 # PARTE 2: ESTADÍSTICAS RECURSIVAS
@@ -71,8 +105,9 @@ def suma_recursiva(nums):
     Caso base: lista vacía → 0
     Complejidad: O(n).
     """
-    # TODO
-    pass
+    if not nums:
+        return 0
+    return nums[0] + suma_recursiva(nums[1:])
 
 
 def maximo_recursivo(nums):
@@ -81,9 +116,12 @@ def maximo_recursivo(nums):
     Caso base: lista de un elemento → ese elemento.
     Complejidad: O(n).
     """
-    # TODO
-    pass
-
+    if not nums:
+        return None
+    if len(nums) == 1:
+        return nums[0]
+    max_resto = maximo_recursivo(nums[1:])
+    return nums[0] if nums[0] > max_resto else max_resto
 
 def cuenta_mayores_recursivo(nums, umbral, i=0):
     """
@@ -91,9 +129,10 @@ def cuenta_mayores_recursivo(nums, umbral, i=0):
     Usa recursión de cola.
     Complejidad: O(n).
     """
-    # TODO
-    pass
-
+    if i >= len(nums):
+        return 0
+    actual = 1 if nums[i] > umbral else 0
+    return actual + cuenta_mayores_recursivo(nums, umbral, i + 1)
 
 # =============================================================================
 # PARTE 3: POTENCIAS Y EXPONENCIACIÓN RÁPIDA
@@ -118,8 +157,14 @@ def potencia_rapida(base, exp):
     """
     if exp == 0:
         return 1
-    # TODO: implementa los casos par e impar
-    pass
+    if exp < 0:
+        return 1 / potencia_rapida(base, -exp)
+
+    if exp % 2 == 0
+        mitad = potencia_rapida(base, exp // 2)
+        return mitad * mitad
+    else:
+        return base * poteencia_rapida(base, exp - 1)
 
 
 # =============================================================================
@@ -149,9 +194,8 @@ def top_k_baratos(catalogo, k):
     PISTA: ordena primero y luego usa rebanado de lista.
     Complejidad: O(n log n + k).
     """
-    # TODO
-    pass
-
+    catalogo_ordenado = sorted(catalogo, key=lambda p: p['precio'])
+    return catalogo_ordenado[:k]
 
 def rango_precio(catalogo_ordenado, precio_min, precio_max):
     """
@@ -160,9 +204,14 @@ def rango_precio(catalogo_ordenado, precio_min, precio_max):
     Usa búsqueda binaria para encontrar los extremos del rango.
     Complejidad: O(log n + k).
     """
-    # TODO: usa bisect o tu propia búsqueda binaria sobre los precios
-    # Tip: extrae una lista de solo precios para facilitar la búsqueda binaria
-    pass
+    precios = [p['precio'] for p in catalogo_ordenado]
+    
+    # Encontrar el índice de inicio usando búsqueda binaria manual o bisect
+    import bisect
+    i_inicio = bisect.bisect_left(precios, precio_min)
+    i_fin = bisect.bisect_right(precios, precio_max)
+    
+    return catalogo_ordenado[i_inicio:i_fin]
 
 
 # =============================================================================
@@ -250,10 +299,34 @@ if __name__ == "__main__":
 
 1. ¿Qué algoritmo de ordenación elegiste en la Parte 1 y por qué
    es apropiado para ordenar una lista de dicts por apellido?
+   - Se seleccionó Timsort (implementado por defecto en la función `sorted()` de Python). 
+   Es el más apropiado ya que combina Merge Sort e Insertion Sort, garantizando una complejidad de O(n log n) en el 
+   peor y promedio de los casos, siendo altamente eficiente para objetos complejos (diccionarios) y manteniendo la 
+   estabilidad ante empates de claves secundarias
 
-2. ¿Cuántas comparaciones haría la búsqueda binaria en una agenda
-   de 1 000 contactos en el peor caso?
+2. ¿Cuántas comparaciones haría la búsqueda binaria en una agenda de 1 000 contactos en el peor caso?
+   - En el peor caso, la cantidad máxima de comparaciones está dada por el límite superior de la función logaritmo en base 2:
+     $\lceil \log_2(1000) \rceil = 10$ comparaciones.
 
 3. ¿Cuántas llamadas recursivas hace potencia_rapida(2, 64)?
    Dibuja el árbol de llamadas.
+   - Hace un total de 6 llamadas recursivas principales al reducir el exponente a la mitad repetidamente:
+     $64 \rightarrow 32 \rightarrow 16 \rightarrow 8 \rightarrow 4 \rightarrow 2 \rightarrow 1 \rightarrow 0$.
+     
+     Árbol esquemático de reducción:
+                       potencia(2, 64)
+                              |
+                       potencia(2, 32)
+                              |
+                       potencia(2, 16)
+                              |
+                       potencia(2, 8)
+                              |
+                       potencia(2, 4)
+                              |
+                       potencia(2, 2)
+                              |
+                       potencia(2, 1)
+                              |
+                       potencia(2, 0) [Caso Base]
 """)
