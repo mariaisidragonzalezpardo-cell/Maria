@@ -13,6 +13,11 @@ import random
 # =============================================================================
 # PARTE 1: BÚSQUEDA SECUENCIAL
 # =============================================================================
+# =============================================================================
+# Uso de IA
+# Colsulta de referencia para la estructura y validación conceptual de los algoritmos 
+# de búsqueda secuencial y binaria.
+# =============================================================================
 
 def busqueda_secuencial(arr, objetivo):
     """
@@ -52,7 +57,6 @@ def busqueda_binaria_iterativa(arr, objetivo):
         else:
             derecha = mid -1
 
-
     return -1
 
 
@@ -77,16 +81,12 @@ def busqueda_binaria_recursiva(arr, objetivo, izquierda=None, derecha=None):
         return -1
 
     mid = (izquierda + derecha) // 2
-
-    # Caso 1: se encontro el objectivo
     if arr[mid] == objetivo:
         return mid
-    # Caso 2: buscar en la mitad de la derecha
     elif arr[mid] < objetivo:
         return busqueda_binaria_recursiva(arr, objetivo, mid + 1, derecha)
-    # Caso 3: buscar en la mitad de la izquierda
     else:
-        return busqueda_binaria_recursiva(arr, objetivo, izquierda, mid - 1)
+        return busqueda_binaria_recursiva(arr, obetivo, izquierda, mid - 1)
 
 
 # =============================================================================
