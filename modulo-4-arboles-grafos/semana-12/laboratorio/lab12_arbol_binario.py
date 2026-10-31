@@ -1,10 +1,18 @@
 """
 Lab 12 — Árbol Binario y Recorridos
 INF 222 Estructura de Datos · Semestre 2026-2
-Estudiante: _________________________
-Grupo: ______________________________
+Estudiante: Maria Gonzalez
+Grupo: Lab, B
 Fecha: ______________________________
 """
+# =============================================================================
+# USO DE IA
+# Como guía de apoyo para revisar la estructura del código,
+# entender el uso de la bandera `primera_llamada` en la recursión y verificar
+# el funcionamiento del recorrido por niveles con una cola (deque).
+# La implementación y la verificación con los casos de prueba fueron revisadas
+# por la estudiante.
+# =============================================================================
 
 from collections import deque  # para el recorrido por niveles (tarea)
 
@@ -44,8 +52,10 @@ class ArbolBinario:
             nodo = self.raiz
         # TODO: implementa la recursividad
         # Caso base: nodo is None → retornar []
+        if nodo is None:
+                    return []
         # Caso recursivo: inorden(izq) + [nodo.dato] + inorden(der)
-        pass
+        return self.inorden(nodo.hijo_izq, False) + [nodo.dato] + self.inorden(nodo.hijo_der, False)
 
     def preorden(self, nodo=None, primera_llamada=True):
         """
@@ -54,8 +64,11 @@ class ArbolBinario:
         """
         if primera_llamada:
             nodo = self.raiz
-        # TODO
-        pass
+        if nodo is None:
+            return []
+        return ([nodo.dato]
+                + self.preorden(nodo.hijo_izq, False)
+                + self.preorden(nodo.hijo_der, False))
 
     def postorden(self, nodo=None, primera_llamada=True):
         """
@@ -65,7 +78,11 @@ class ArbolBinario:
         if primera_llamada:
             nodo = self.raiz
         # TODO
-        pass
+        if nodo is None:
+            return []
+        return (self.postorden(nodo.hijo_izq, False)
+                + self.postorden(nodo.hijo_der, False)
+                + [nodo.dato])
 
     def por_niveles(self):
         """
@@ -74,13 +91,19 @@ class ArbolBinario:
         TAREA (trabajo autónomo): implementa este método.
         Retorna una lista con los datos en el orden visitado.
         """
-        # TODO (tarea): usa una deque como cola
-        # Agrega la raíz a la cola
-        # Mientras la cola no esté vacía:
-        #   - Saca el nodo del frente
-        #   - Agrega su dato a la lista de resultado
-        #   - Agrega sus hijos (no None) a la cola
-        pass
+        resultado = []
+        if self.raiz is None:
+            return resultado
+ 
+        cola = deque([self.raiz])
+        while cola:
+            nodo = cola.popleft()          # saca el nodo del frente
+            resultado.append(nodo.dato)    # visita el nodo
+            if nodo.hijo_izq is not None:
+                cola.append(nodo.hijo_izq)
+            if nodo.hijo_der is not None:
+                cola.append(nodo.hijo_der)
+        return resultado
 
     # ------------------------------------------------------------------
     # UTILIDADES
@@ -96,7 +119,8 @@ class ArbolBinario:
         if nodo is None:
             return -1
         # TODO: altura = 1 + max(altura(izq), altura(der))
-        pass
+        return 1 + max(self.altura(nodo.hijo_izq, False),
+                       self.altura(nodo.hijo_der, False))
 
     def contar_nodos(self, nodo=None, primera_llamada=True):
         """Retorna el número de nodos en el árbol."""
@@ -105,7 +129,9 @@ class ArbolBinario:
         if nodo is None:
             return 0
         # TODO
-        pass
+        return (1
+                + self.contar_nodos(nodo.hijo_izq, False)
+                + self.contar_nodos(nodo.hijo_der, False))
 
 
 # =============================================================================
