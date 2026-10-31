@@ -10,8 +10,6 @@ Fecha: ______________________________
 # Como guía de apoyo para revisar la estructura del código,
 # entender el uso de la bandera `primera_llamada` en la recursión y verificar
 # el funcionamiento del recorrido por niveles con una cola (deque).
-# La implementación y la verificación con los casos de prueba fueron revisadas
-# por la estudiante.
 # =============================================================================
 
 from collections import deque  # para el recorrido por niveles (tarea)
