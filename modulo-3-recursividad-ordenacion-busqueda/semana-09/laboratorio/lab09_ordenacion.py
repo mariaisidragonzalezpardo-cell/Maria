@@ -205,8 +205,8 @@ if __name__ == "__main__":
             _, t_seleccion = medir_tiempo(seleccion, arr)
             _, t_insercion = medir_tiempo(insercion, arr)
             print(f"{n:>7,} | {desc:>10} | {t_burbuja:>10.4f} | {t_seleccion:>10.4f} | {t_insercion:>10.4f}")
-
+            
     print("\n¿Qué observas? Escribe tus conclusiones aquí:")
-    print("  1. ___________")
-    print("  2. ___________")
-    print("  3. ___________")
+    print("  1. Inserción (insertion sort) es significativamente más rápido cuando el arreglo ya está ordenado (mejor caso O(n)), superando ampliamente a burbuja y selección en esos escenarios.")
+    print("  2. Burbuja con optimización (flag de intercambio) detecta de inmediato los arreglos ordenados finalizando en O(n), pero en arreglos invertidos o aleatorios su rendimiento cae notablemente debido a la cantidad de intercambios.")
+    print("  3. Selección mantiene un tiempo de ejecución muy constante e independiente del estado inicial del arreglo, ya que siempre realiza las mismas iteraciones de búsqueda del mínimo (O(n²) estricto).")
