@@ -24,7 +24,7 @@ class Pila:
         Complejidad: O(1) amortizado.
         """
         # TODO: implementa este método
-        pass
+        self._datos.append(dato)
 
     def pop(self):
         """
@@ -34,7 +34,9 @@ class Pila:
         """
         # TODO: implementa este método
         # Recuerda verificar si la pila está vacía antes de operar
-        pass
+        if self.is_empty():
+            raise IndexError("pop desde una pila vacia")
+        return self._datos.pop()
 
     def peek(self):
         """
@@ -43,7 +45,9 @@ class Pila:
         Complejidad: O(1).
         """
         # TODO: implementa este método
-        pass
+        if self.is_empty():
+            raise IndexError("peek desde una pila vacia")
+        return self._datos[-1]
 
     def is_empty(self):
         """
@@ -51,7 +55,7 @@ class Pila:
         Complejidad: O(1).
         """
         # TODO: implementa este método
-        pass
+        return len(self._datos) == 0
 
     def size(self):
         """
@@ -59,7 +63,7 @@ class Pila:
         Complejidad: O(1).
         """
         # TODO: implementa este método
-        pass
+        return len(self._datos)
 
     def __str__(self):
         """
@@ -68,7 +72,7 @@ class Pila:
         Complejidad: O(n).
         """
         # TODO: implementa este método
-        pass
+        return f"pila (tope -> base): {self.datos[::-1]}"
 
 
 # =============================================================================
