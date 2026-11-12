@@ -1,9 +1,9 @@
 """
 Lab 14 — Grafos: representación, BFS y DFS
 INF 222 Estructura de Datos · Semestre 2026-2
-Estudiante: _________________________
-Grupo: ______________________________
-Fecha: ______________________________
+Estudiante: Maria Gonzalez 
+Grupo: Lab, B
+Fecha:
 """
 
 from collections import deque
@@ -32,7 +32,10 @@ class Grafo:
         self.agregar_vertice(v1)
         self.agregar_vertice(v2)
         # TODO: agrega v2 a la lista de v1 Y v1 a la lista de v2
-        pass
+        if v2 not in self._lista_adyacencia[v1]:
+            self._lista_adyacencia[v1].append(v2)
+        if v1 not in self._lista_adyacencia[v2]:
+            self._lista_adyacencia[v2].append(v1)
 
     def vecinos(self, v):
         """Retorna la lista de vecinos del vértice v."""
@@ -64,11 +67,19 @@ class Grafo:
         cola = deque()
 
         # TODO: implementa BFS
-        # 1. Agrega `inicio` a la cola y al set de visitados
-        # 2. Mientras la cola no esté vacía:
-        #    a. Saca el vértice del frente (popleft)
-        #    b. Agrégalo a orden_visita
-        #    c. Para cada vecino no visitado: márcalo como visitado y agrégalo a la cola
+        if inicio not in self._lista_adyacencia:
+            return orden_visita
+
+        cola.append(inicio)
+        visitados.add(inicio)
+
+        while cola:
+            v = cola.popleft()
+            orden_visita.append(v)
+            for vecino in self._lista_adyacencia[v]:
+                if vecino not in visitados:
+                    visitados.add(vecino)
+                    cola.append(vecino)
 
         return orden_visita
 
@@ -83,8 +94,15 @@ class Grafo:
         pila = [inicio]
 
         # TODO: implementa DFS iterativo con pila
-        # Nota: la pila produce un orden diferente al DFS recursivo;
-        # ambos son DFS válidos.
+        while pila:
+            v = pila.pop()
+            if v not in visitados:
+                visitados.add(v)
+                orden_visita.append(v)
+                # Recorrer vecinos en orden inverso para mantener correspondencia intuitiva
+                for vecino in reversed(self._lista_adyacencia[v]):
+                    if vecino not in visitados:
+                        pila.append(vecino)
 
         return orden_visita
 
@@ -98,10 +116,15 @@ class Grafo:
 
         def _dfs(v):
             # TODO: marca v como visitado, agrégalo a orden_visita
-            # luego llama _dfs recursivamente sobre sus vecinos no visitados
-            pass
+            visitados.add(v)
+            orden_visita.append(v)
+            for vecino in self._lista_adyacencia[v]:
+                if vecino not in visitados:
+                    _dfs(vecino)
 
-        _dfs(inicio)
+        if inicio in self._lista_adyacencia:
+
+            _dfs(inicio)
         return orden_visita
 
     def camino_bfs(self, inicio, fin):
@@ -111,10 +134,37 @@ class Grafo:
         o None si no existe camino.
         """
         # TODO: modifica BFS para registrar el predecesor de cada vértice
-        # Luego reconstruye el camino desde `fin` hasta `inicio` usando el mapa de predecesores
-        pass
+        if inicio not in self._lista_adyacencia or fin not in self._lista_adyacencia:
+            return None
+        if inicio == fin:
+            return [inicio]
 
+        visitados = {inicio}
+        cola = deque([inicio])
+        predecesor = {inicio: None}
 
+        while cola:
+            v = cola.popleft()
+            if v == fin:
+                break
+            for vecino in self._lista_adyacencia[v]:
+                if vecino not in visitados:
+                    visitados.add(vecino)
+                    predecesor[vecino] = v
+                    cola.append(vecino)
+
+        if fin not in predecesor:
+            return None
+
+        # Reconstruir el camino desde `fin` hasta `inicio`
+        camino = []
+        actual = fin
+        while actual is not None:
+            camino.append(actual)
+            actual = predecesor[actual]
+        camino.reverse()
+
+        return camino
 # =============================================================================
 # CONSTRUCCIÓN DE GRAFO DE EJEMPLO
 # =============================================================================
