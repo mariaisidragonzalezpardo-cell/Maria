@@ -67,7 +67,7 @@ def buscar_por_apellido(contactos_ordenados, apellido_buscado):
     derecha = len(contactos_ordenados) - 1
     indice_encontrado = -1
     # Busqueda binaria para encontar culquier coincidencia
-    while isquierda <= derecha:
+    while izquierda <= derecha:
         mid = (izquierda + derecha) // 2
         apellido_actual = contactos_ordenados[mid]['apellido']
 
@@ -86,11 +86,11 @@ def buscar_por_apellido(contactos_ordenados, apellido_buscado):
     # Expandir hacia la izquierda
     i = indice_encontrado - 1    
     while i >= 0 and contactos_ordenados[i]['apellido'] == apellido_buscado:
-       resultado.insert(0, contactos_ordenados[i])
+       resultados.insert(0, contactos_ordenados[i])
        i -= 1
     # Expandir hacia la derecha
     j = indice_encontrado + 1
-    while j < len(contactos_ordenados) and contactos_ordenados[j]['apellido'] == apellido_buscado
+    while j < len(contactos_ordenados) and contactos_ordenados[j]['apellido'] == apellido_buscado:
         resultados.append(contactos_ordenados[j])
         j += 1
     return resultados
@@ -160,11 +160,11 @@ def potencia_rapida(base, exp):
     if exp < 0:
         return 1 / potencia_rapida(base, -exp)
 
-    if exp % 2 == 0
+    if exp % 2 == 0:
         mitad = potencia_rapida(base, exp // 2)
         return mitad * mitad
     else:
-        return base * poteencia_rapida(base, exp - 1)
+        return base * potencia_rapida(base, exp - 1)
 
 
 # =============================================================================

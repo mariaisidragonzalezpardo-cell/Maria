@@ -1,13 +1,20 @@
 """
 Lab 13 — Árbol Binario de Búsqueda (BST)
 INF 222 Estructura de Datos · Semestre 2026-2
-Estudiante: _________________________
-Grupo: ______________________________
-Fecha: ______________________________
+Estudiante: María González 
+Grupo: Lab, B 
+Fecha: 
 """
 
 import random
-
+# =============================================================================
+# DECLARACIÓN DE USO DE IA
+# =============================================================================
+# Se utilizó exclusivamente para 
+# consulta teórica para comprender la lógica de los métodos 
+# de inserción, búsqueda y eliminación en un Árbol Binario de Búsqueda (BST),
+# así como para verificar la resolución de casos base en estructuras recursivas.
+# =============================================================================
 
 # =============================================================================
 # NODO DEL BST
@@ -53,7 +60,13 @@ class BST:
         Si dato == nodo.dato: no hacer nada (sin duplicados).
         """
         # TODO
-        pass
+        if nodo is None:
+            return NodoBST(dato)
+        if dato < nodo.dato:
+            nodo.izquierdo = self._insertar_rec(nodo.izquierdo, dato)
+        elif dato > nodo.dato:
+            nodo.derecho = self._insertar_rec(nodo.derecho, dato)
+        return nodo
 
     # ------------------------------------------------------------------
     # BÚSQUEDA
@@ -71,7 +84,13 @@ class BST:
         Si dato > nodo.dato: buscar en subárbol derecho.
         """
         # TODO
-        pass
+        if nodo is None:
+            return False
+        if nodo.dato == dato:
+            return True
+        if dato < nodo.dato:
+            return self._buscar_rec(nodo.izquierdo, dato)
+        return self._buscar_rec(nodo.derecho, dato) 
 
     # ------------------------------------------------------------------
     # MÍNIMO Y MÁXIMO
@@ -86,14 +105,20 @@ class BST:
     def _minimo_nodo(self, nodo):
         """Navega hacia el nodo más a la izquierda (mínimo del subárbol)."""
         # TODO: recorre hacia la izquierda hasta que izquierdo sea None
-        pass
+        actual = nodo
+        while actual.izquierdo is not None:
+            actual = actual.izquierdo
+        return actual
 
     def maximo(self):
         """Retorna el dato máximo del BST."""
         if self._raiz is None:
             raise ValueError("árbol vacío")
         # TODO: recorre hacia la derecha hasta que derecho sea None
-        pass
+        actual = self._raiz
+        while actual.derecho is not None:
+            actual = actual.derecho
+        return actual.dato
 
     # ------------------------------------------------------------------
     # ELIMINACIÓN
@@ -129,7 +154,13 @@ class BST:
         else:
             # Encontrado — aplicar los 3 casos
             # TODO: implementa CASO 1, CASO 2 y CASO 3
-            pass
+            if nodo.izquierdo is None:
+                return nodo.derecho
+            elif nodo.derecho is None:
+                return nodo.izquierdo
+            sucesor = self._minimo_nodo(nodo.derecho)
+            nodo.dato = sucesor.dato
+            nodo.derecho = self._eliminar_rec(nodo.derecho, sucesor.dato)
 
         return nodo
 
